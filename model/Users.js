@@ -13,7 +13,7 @@ class Users extends BaseModel {
     return this.db.collection("users").doc(id).set(payload);
   }
 
-  remove(id) {
+  delete(id) {
     return this.db.collection("users").doc(id).delete();
   }
 

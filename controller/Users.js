@@ -1,15 +1,12 @@
 const ApiError = require("../class/ApiError");
 const UsersModel = require("../model/Users");
 const usersModel = new UsersModel();
-
+const cryptoPassword = require("../utils/cryptoPassword");
 class Users {
   post(req, res) {
-    const { email, password, name } = req.body;
-
     const payload = {
-      email,
-      password,
-      name,
+      ...req.body,
+      password: cryptoPassword(req.body.password),
     };
 
     usersModel.add(payload).then((user) => {
@@ -26,7 +23,20 @@ class Users {
 
   put(req, res) {
     const { id } = req.params;
-    const {} = req.body;
+
+    const payload = {
+      ...req.body,
+      password: cryptoPassword(req.body.password),
+    };
+
+    usersModel
+      .update(id, payload)
+      .then(() => {
+        res.send("Usuario alterado com sucesso");
+      })
+      .catch((error) => {
+        res.status(500).send(error);
+      });
   }
 
   delete(req, res) {
