@@ -1,5 +1,13 @@
 const express = require("express");
+const verifyToken = require("../middlewares/verifyToken");
+
+// Rotas:
+const auth = require("./auth");
 const users = require("./users");
+
 const router = express.Router();
-router.use('/users', users);
+
+router.use("/auth", auth);
+router.use("/users", verifyToken, users);
+
 module.exports = router;
