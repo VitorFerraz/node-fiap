@@ -27,10 +27,5 @@ describe("/POST auth", () => {
         },
         done
       )
-      .end((error, response) => {
-        expect(response.statusCode).toEqual(401);
-        expect(response.body.message).toEqual("Usuario não autorizado");
-        done();
-      });
   });
 });

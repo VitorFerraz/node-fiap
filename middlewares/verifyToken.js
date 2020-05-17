@@ -7,7 +7,7 @@ const verifyToken = (req, res, next) => {
   if (!auth) {
     return res
       .status(401)
-      .send(new ApiError("Token não encontrado", "token_not_found"));
+      .send(new ApiError("Autorização não encontrado", "auth_not_found"));
   }
 
   const token = req.headers.authorization.split(" ")[1];

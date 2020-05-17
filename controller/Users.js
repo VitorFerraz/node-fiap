@@ -18,6 +18,9 @@ class Users {
           .status(201)
           .json({ id: user.id, email: data.email, name: data.name });
       });
+    })
+    .catch((error) => {
+      res.status(500).send(error)
     });
   }
 
