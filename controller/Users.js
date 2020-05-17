@@ -62,7 +62,7 @@ class Users {
       .then((user) => {
         if (!user.exists) {
           res
-            .status(404)
+            .status(204)
             .send(new ApiError("Usuario não encontrado", "not_found"));
         }
 
