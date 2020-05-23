@@ -8,10 +8,10 @@ class Products {
         const payload = {
           ...req.body
         };
-    
+
         productsModel.add(payload).then((product) => {
             product.get().then((productRef) => {
-            const data = productRef.data();    
+            const data = productRef.data();
             res
               .status(201)
               .json({ id: product.id, name: data.name, description: data.description });
@@ -23,11 +23,11 @@ class Products {
       }
     put(req, res) {
         const { id } = req.params;
-    
+
         const payload = {
           ...req.body
         };
-    
+
         productsModel
           .update(id, payload)
           .then(() => {
@@ -51,11 +51,11 @@ class Products {
       }
     get(req, res) {
         const { id } = req.params;
-    if (!id) { 
+    if (!id) {
         productsModel.getAll().then((products) => {
             const list = []
-            products.forEach(doc => {
-                list.push(doc.data())
+            products.forEach(product => {
+                list.push({ id: product.id, ... product.data() })
             });
             if (list.length == 0) {
                 res
@@ -66,7 +66,7 @@ class Products {
         }).catch((error) => {
             res.status(500).send(error);
         });
-    } else { 
+    } else {
         productsModel
         .get(id)
         .then((product) => {
@@ -75,7 +75,7 @@ class Products {
               .status(204)
               .send(new ApiError("Produto não encontrado", "not_found"));
           }
-          res.json(product.data());
+          res.json({ id: product.id, ... product.data() });
         })
         .catch((error) => {
           res.status(500).send(error);

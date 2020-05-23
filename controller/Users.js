@@ -66,7 +66,7 @@ class Users {
             .send(new ApiError("Usuario não encontrado", "not_found"));
         }
 
-        res.json(user.data());
+        res.json({ id: user.id, ... user.data() });
       })
       .catch((error) => {
         res.status(500).send(error);
